@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  parser:
+    image: golang:1.13
+    depends_on:
+      - postgres
+    volumes:
+      - ./:/go/src/github.com/sekerin/artticles-aggregator
+    working_dir: /go/src/github.com/sekerin/artticles-aggregator
+    env_file:
+      - .env
+    entrypoint: make parser-run
+
+  search:
+    image: golang:1.13
+    depends_on:
+      - postgres
+    volumes:
+      - ./:/go/src/github.com/sekerin/artticles-aggregator
+    working_dir: /go/src/github.com/sekerin/artticles-aggregator
+    env_file:
+      - .env
+    entrypoint: make search-run
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 5432:5432

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package parse;
+
+service Parser {
+    rpc Parse (ParseRequest) returns (ParseResponse);
+}
+
+message ParseRequest {
+    string endpoint = 1;
+    string pageUrl = 2;
+    string title = 3;
+    string fullText = 4;
+}
+
+message ParseResponse {
+    int32 parsed = 1;
+}
